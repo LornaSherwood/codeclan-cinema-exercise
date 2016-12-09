@@ -48,5 +48,9 @@ class Film
     return Customer.get_many( sql )
   end
 
+  def ticket_sales
+    return show_customers.count
+  end
+
 
 end

@@ -57,6 +57,7 @@ class Customer
   end
 
   def buy_ticket(film)
+      # works in ruby, could use sql to find film price (assuming have ticket)
      @funds = @funds - film.price
   end
 
@@ -69,14 +70,6 @@ class Customer
 
 end
 
-# sql = "
-#   SELECT c.name, f.title FROM customers c
-#   INNER JOIN tickets t
-#   ON t.customer_id = c.id
-#   INNER JOIN films f
-#   ON f.id = t.film_id
-#   WHERE c.id = #{@id};
-# "
 
 
 
