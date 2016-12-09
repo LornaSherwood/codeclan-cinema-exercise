@@ -47,14 +47,21 @@ class Customer
     return Film.get_many( sql )
   end
 
-  def buy_ticket
+  def update
     sql = "
-      SELECT f.price FROM films f
-      INNER JOIN tickets t
-      ON t.film_id = #{@id}
-      WHERE customer_id = #{@id}
-    "
-    SqlRunner.run(sql)
+      UPDATE customers
+      SET (name, funds) = 
+      ('#{@name}', #{@funds})
+      WHERE id = #{@id};"
+      SqlRunner.run(sql)
+  end
+
+  def buy_ticket(film)
+     @funds = @funds - film.price
+  end
+
+  def count_tickets
+    return show_films.count
   end
 
 
