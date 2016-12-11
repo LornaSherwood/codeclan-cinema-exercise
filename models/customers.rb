@@ -56,9 +56,26 @@ class Customer
       SqlRunner.run(sql)
   end
 
-  def buy_ticket(film)
-      # works in ruby, could use sql to find film price (assuming have ticket)
-     @funds = @funds - film.price
+  def buy_tickets
+    sql = "
+      SELECT f.price FROM films f
+      INNER JOIN tickets t
+      ON t.film_id = f.id
+      WHERE customer_id = #{@id}
+    "
+    ticket_prices = SqlRunner.run(sql) #{"price"=>"9"}, {"price"=>"8"}, {"price"=>"5"}
+    price_array = []
+    for price in ticket_prices
+      price_array << price["price"].to_i
+    end
+    return price_array
+     # [9, 8, 5]
+  end
+
+  def pay_tickets(prices) #prices is result of .buy_tickets
+     for price in prices
+       @funds = @funds - price
+     end
   end
 
   def count_tickets
